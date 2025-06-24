@@ -1,16 +1,14 @@
-
 {
   "family": "budget-monitor-task",
-  "executionRoleArn": "arn:aws:iam::514423426634:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
-  "cpu": "512",
-  "memory": "1024",
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::514423426634:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "name": "sample-app",
-      "image": "REPLACE_ME",
-      "essential": true,
+      "name": "budget-monitor-container",
+      "image": "514423426634.dkr.ecr.us-east-1.amazonaws.com/budget-monitor-repo:latest",
       "portMappings": [
         {
           "containerPort": 80,
@@ -24,7 +22,8 @@
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
-      }
+      },
+      "essential": true
     }
   ]
 }
