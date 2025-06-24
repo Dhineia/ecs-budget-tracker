@@ -1,5 +1,7 @@
 {
   "family": "budget-monitor-task",
+   
+"executionRoleArn": "arn:aws:iam::514423426634:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "512",
