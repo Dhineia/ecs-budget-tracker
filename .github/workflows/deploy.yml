@@ -1,15 +1,25 @@
-    - name: 🧱 Render ECS task definition
-      id: render-task
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: task-definition.json
-        container-name: ${{ secrets.CONTAINER_NAME }}
-        image: ${{ env.IMAGE_URI }}
+name: Deploy to ECS
 
-    - name: 🚀 Deploy to ECS
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.render-task.outputs.task-definition }}
-        service: ${{ secrets.SERVICE_NAME }}
-        cluster: ${{ secrets.CLUSTER_NAME }}
-        wait-for-service-stability: true
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧱 Render ECS task definition
+        id: render-task
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ secrets.CONTAINER_NAME }}
+          image: ${{ env.IMAGE_URI }}
+
+      - name: 🚀 Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task.outputs.task-definition }}
+          service: ${{ secrets.SERVICE_NAME }}
+          cluster: ${{ secrets.CLUSTER_NAME }}
+          wait-for-service-stability: true
