@@ -1,0 +1,20 @@
+{
+  "family": "budget-monitor-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "sample-app",
+      "image": "REPLACE_ME",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}
