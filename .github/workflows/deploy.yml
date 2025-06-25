@@ -24,13 +24,13 @@ jobs:
 
     - name: Build, tag, and push Docker image to ECR
       run: |
-        IMAGE_URI=${{ secrets.ECR_REGISTRY }}/budget-monitor-app:latest
+        IMAGE_URI=${{ secrets.ECR_REGISTRY }}:latest
         docker build -t $IMAGE_URI .
         docker push $IMAGE_URI
 
     - name: Fill in the new image URI in the task definition
       run: |
-        sed "s|<IMAGE_URI>|${{ secrets.ECR_REGISTRY }}/budget-monitor-app:latest|g" task-definition.json > task-def.json
+        sed "s|<IMAGE_URI>|${{ secrets.ECR_REGISTRY }}:latest|g" task-definition.json > task-def.json
 
     - name: Deploy to ECS Fargate
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
